@@ -17,6 +17,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions/cartActions';
 import CartItem from './CartItem';
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
+
 
 let { height, width } = Dimensions.get('window');
 
@@ -59,13 +61,23 @@ const Cart = ( props ) => {
                            <Text style={ styles.price }>$ { total }</Text>
                        </Left>
                        <Right>
-                           <Button 
+                           <EasyButton 
+                                danger
+                                medium
                                 title="Clear"
                                 onPress={ () => props.clearCart() }
-                                />
+                            >
+                                <Text style={{ color: "white"}}>Clear</Text>
+                            </EasyButton>
                        </Right>
                        <Right>
-                           <Button title="Checkout" onPress={ () => props.navigation.navigate('Checkout') }/>
+                           <EasyButton 
+                                primary
+                                medium
+                                onPress={ () => props.navigation.navigate('Checkout') }
+                            >
+                                <Text style={{ color: "white"}}>Checkout</Text>
+                            </EasyButton>
                        </Right>
                    </View>
                </Container>

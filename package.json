@@ -8,13 +8,18 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.3",
     "@react-navigation/material-top-tabs": "^5.3.13",
     "@react-navigation/native": "^5.9.0",
     "@react-navigation/stack": "^5.13.0",
+    "axios": "^0.21.1",
     "expo": "~40.0.0",
+    "expo-image-picker": "^10.0.0",
     "expo-status-bar": "~1.0.3",
+    "jwt-decode": "^3.1.2",
+    "mime": "^2.5.2",
     "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -27,6 +32,7 @@
     "react-native-swipe-list-view": "^3.2.6",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.15.2",
+    "react-native-toast-message": "^1.4.3",
     "react-native-vector-icons": "^8.0.0",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
@@ -35,7 +41,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
