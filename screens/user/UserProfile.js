@@ -9,22 +9,23 @@ import baseURL from '../../assets/common/baseUrl';
 
 import AuthGlobal from '../../context/store/AuthGlobal';
 import { logoutUser } from '../../context/actions/Auth.actions';
+import OrderCard from '../../Shared/OrderCard';
 
 const UserProfile = (props) => {
     
     const context = useContext(AuthGlobal);
     const [userProfile, setUserProfile] = useState();
-    
-    useEffect(() => {
-        if(
-            context.stateUser.isAuthenticated === false ||
-            context.stateUser.isAuthenticated === null
-        ){
-            props.navigation.navigate('Login');
-        }
-        
-        console.log(context.stateUser);
-        AsyncStorage.getItem('jwt')
+    const [orders, setOrders] = useState();
+    useFocusEffect(
+        useCallback(() => {
+            if(
+                context.stateUser.isAuthenticated === false ||
+                context.stateUser.isAuthenticated === null
+            ){
+                props.navigation.navigate('Login');
+            }
+            
+            AsyncStorage.getItem('jwt')
             .then((res) => {
                 axios
                     .get(`${ baseURL }users/${ context.stateUser.user.userId }`, {
@@ -34,12 +35,24 @@ const UserProfile = (props) => {
                     .catch((error) => console.log(error));
             })
             .catch((error) => console.log(error));
-        
+            
+            axios
+            .get(`${ baseURL }orders`)
+            .then((res) => {
+                const data = res.data;
+                const userOrders = data.filter(
+                    (order) => order.user._id === context.stateUser.user.userId
+                );
+                setOrders(userOrders);
+            })
+            .catch((error) => console.log(error));
+            
             return () => {
                 setUserProfile();
+                setOrders();
             }
             
-    }, [context.stateUser.isAuthenticated])
+    }, [context.stateUser.isAuthenticated]))
     return (
         <Container style={ styles.container }>
             <ScrollView contentContainerStyle={ styles.subContainer }>
@@ -60,6 +73,25 @@ const UserProfile = (props) => {
                         ]} />
                     </View>
                 </View>
+                <View style={ styles.order }>
+                    <Text style={{ fontSize: 20 }}>My Orders</Text>
+                    
+                    <View>
+                        { orders ? 
+                        
+                        (
+                           orders.map((order) => {
+                               return <OrderCard key={ order.id } { ...order } />
+                           }) 
+                        )
+                        :
+                            <View style={ styles.order }>
+                                <Text>You have no orders</Text>
+                            </View>    
+                        }
+                    </View>
+                    
+                </View>
             </ScrollView>
         </Container>
     )
@@ -73,6 +105,11 @@ const styles = StyleSheet.create({
     subContainer: {
         alignItems: 'center',
         marginTop: 60
+    },
+    order: {
+        marginTop: 20,
+        alignItems: 'center',
+        marginBottom: 60
     }
 })
 

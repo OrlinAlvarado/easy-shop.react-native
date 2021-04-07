@@ -41,7 +41,6 @@ const Register = (props) => {
                 .post(`${ baseURL }users/register`, user )
                 .then((res) => {
                     if(res.status == 201){
-                        console.log('success');
                         Toast.show({
                             topOffset: 60,
                             type: "success",

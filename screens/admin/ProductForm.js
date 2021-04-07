@@ -144,7 +144,6 @@ const ProductForm = (props) => {
         }
         
         if( item !== null){
-            console.log(formData);
             axios
                 .put(`${ baseUrl }products/${item.id}`, formData, config)
                 .then((res) => {
@@ -189,7 +188,6 @@ const ProductForm = (props) => {
                     }
                 })
                 .catch((error) => {
-                    console.log("Prueba", error);
                     Toast.show({
                         topOffset: 60,
                         type: 'error',

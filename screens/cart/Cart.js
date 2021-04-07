@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Dimensions, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { 
     Container,
@@ -6,9 +6,6 @@ import {
     Left,
     Right,
     H1,
-    ListItem,
-    Thumbnail,
-    Body
 } 
 from 'native-base';
 import { SwipeListView } from 'react-native-swipe-list-view'
@@ -18,12 +15,15 @@ import { connect } from 'react-redux';
 import * as actions from '../../redux/actions/cartActions';
 import CartItem from './CartItem';
 import EasyButton from '../../Shared/StyledComponents/EasyButton';
+import AuthGlobal from '../../context/store/AuthGlobal';
 
 
 let { height, width } = Dimensions.get('window');
 
 
 const Cart = ( props ) => {
+    
+    const context = useContext(AuthGlobal);
    let  total = 0;
    props.cartItems.forEach(cart => {
        return (total += cart.product.price );
@@ -71,13 +71,26 @@ const Cart = ( props ) => {
                             </EasyButton>
                        </Right>
                        <Right>
-                           <EasyButton 
-                                primary
-                                medium
-                                onPress={ () => props.navigation.navigate('Checkout') }
-                            >
-                                <Text style={{ color: "white"}}>Checkout</Text>
-                            </EasyButton>
+                           { context.stateUser.isAuthenticated 
+                           
+                           ?
+                                <EasyButton 
+                                    primary
+                                    medium
+                                    onPress={ () => props.navigation.navigate('Checkout') }
+                                >
+                                    <Text style={{ color: "white"}}>Checkout</Text>
+                                </EasyButton>   
+                            :   
+                                <EasyButton 
+                                    secondary
+                                    medium
+                                    onPress={ () => props.navigation.navigate('Login') }
+                                >
+                                    <Text style={{ color: "white"}}>Login</Text>
+                                </EasyButton>
+                           }
+                           
                        </Right>
                    </View>
                </Container>

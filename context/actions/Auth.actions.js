@@ -48,7 +48,7 @@ export const getUserProfile = (id) => {
     })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+        
     })
     .catch((err) => {
         Toast.show({
